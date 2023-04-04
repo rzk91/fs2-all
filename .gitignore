@@ -31,7 +31,6 @@ target/
 *.txt
 null/
 src/main/resources/local*.conf
-src/main/resources/application*.conf
 
 #general
 *.class
