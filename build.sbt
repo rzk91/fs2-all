@@ -14,6 +14,7 @@ lazy val root = (project in file("."))
 
 val fs2Dependencies = Seq(
   "co.fs2"          %% "fs2-core"  % fs2Version,
+  "co.fs2"          %% "fs2-io"    % fs2Version,
   "com.github.fd4s" %% "fs2-kafka" % fs2KafkaVersion
 )
 
@@ -29,7 +30,8 @@ val otherDependencies = Seq(
   "com.github.pureconfig"      %% "pureconfig"    % "0.17.2",
   "org.slf4j"                   % "slf4j-log4j12" % "2.0.5",
   "com.typesafe.scala-logging" %% "scala-logging" % "3.9.5",
-  "org.apache.commons"          % "commons-lang3" % "3.12.0"
+  "org.apache.commons"          % "commons-lang3" % "3.12.0",
+  "commons-io"                  % "commons-io"    % "2.11.0"
 )
 
 scalacOptions ++= Seq(

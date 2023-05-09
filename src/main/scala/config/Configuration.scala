@@ -2,13 +2,14 @@ package com.rzk.fs2
 package config
 
 import com.typesafe.scalalogging.LazyLogging
+import fs2.io.file.Path
 import org.apache.kafka.clients.CommonClientConfigs
 import org.apache.kafka.common.config.SaslConfigs
 import pureconfig.generic.auto._
 
 object Configuration extends LazyLogging {
 
-  logger.info(s"Effective configuration: ${source.config().map(_.root.render)}")
+  logger.debug(s"Effective configuration: ${source.config().map(_.root.render)}")
 
   // Case classes
   case class KafkaTopics(
@@ -45,18 +46,18 @@ object Configuration extends LazyLogging {
   case class Name(value: String) extends AnyVal
   case class User(name: Name)
 
-  case class Config(kafka: Kafka, user: User)
+  case class Files(directoryPath: Path, fileExtensions: Set[String])
+
+  case class Config(kafka: Kafka, user: User, files: Files)
 
   // Config objects
   lazy val completeConfig: Config = source.loadOrThrow[Config]
   lazy val kafkaConfig: Kafka = completeConfig.kafka
   lazy val userConfig: User = completeConfig.user
+  lazy val filesConfig: Files = completeConfig.files
 
   // Helper methods
   def kafkaGroupId(consumer: Boolean): String =
     s"${kafkaConfig.groupIdPrefix}-${userConfig.name.value}-kafka-" +
     s"${if (consumer) "reader" else "writer"}"
-
-  def main(args: Array[String]): Unit =
-    println(kafkaConfig)
 }
