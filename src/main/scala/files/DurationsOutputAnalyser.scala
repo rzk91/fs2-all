@@ -9,9 +9,7 @@ import fs2._
 
 object DurationsOutputAnalyser extends IOApp.Simple {
 
-  private val relevantFile: String = "sf29_fix_times_count.log.txt"
-
-  val stream: Stream[IO, Unit] = readFilesFromPath[IO](filesConfig.directoryPath, List(relevantFile))
+  val stream: Stream[IO, Unit] = readFilesFromPath[IO](filesConfig.directoryPath, filesConfig.relevantFiles)
     .through(fileToReaderWith(_.split(',').toList))
     .map {
       case head :: tail => head.drop(60) :: tail // Trim lines

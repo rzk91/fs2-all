@@ -10,9 +10,7 @@ import fs2._
 
 object FullLogOutputAnalyser extends IOApp.Simple {
 
-  private val relevantFile: String = "sf29_fulltest_1243.log.txt"
-
-  val mainStream: Stream[IO, List[String]] = readFilesFromPath[IO](filesConfig.directoryPath, List(relevantFile))
+  val mainStream: Stream[IO, List[String]] = readFilesFromPath[IO](filesConfig.directoryPath, filesConfig.relevantFiles)
     .through(fileToReaderWith(_.split(',').toList))
     .dropWhile(!_.exists(_.contains("[BotDeviceKey(")))
     .map {

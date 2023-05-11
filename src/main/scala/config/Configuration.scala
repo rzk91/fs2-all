@@ -46,7 +46,7 @@ object Configuration extends LazyLogging {
   case class Name(value: String) extends AnyVal
   case class User(name: Name)
 
-  case class Files(directoryPath: Path, fileExtensions: Set[String])
+  case class Files(directoryPath: Path, fileExtensions: Set[String], relevantFiles: List[String])
 
   case class Config(kafka: Kafka, user: User, files: Files)
 

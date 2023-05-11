@@ -11,9 +11,7 @@ import scala.util.Try
 
 object SheetOutputAnalyser extends IOApp.Simple {
 
-  private val relevantFile: String = "sf29_newfix.log.txt"
-
-  val stream: Stream[IO, Unit] = readFilesFromPath[IO](filesConfig.directoryPath, List(relevantFile))
+  val stream: Stream[IO, Unit] = readFilesFromPath[IO](filesConfig.directoryPath, filesConfig.relevantFiles)
     .through(fileToReaderWith(_.split(',').toList))
     .filter(line => line.headOption.exists(_.startsWith("[BotDeviceKey")) && line.lift(1).exists(_.contains("[Stage:")))
     .collect { case _ :: line :: Nil =>

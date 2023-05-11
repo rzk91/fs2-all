@@ -9,14 +9,10 @@ import fs2._
 
 object InfluxOutputAnalyser extends IOApp.Simple {
 
-  private val relevantFile: String = "sf29_anothertest_influx.log.txt"
-
-  val stream: Stream[IO, Unit] = readFilesFromPath[IO](filesConfig.directoryPath, List(relevantFile))
+  val stream: Stream[IO, Unit] = readFilesFromPath[IO](filesConfig.directoryPath, filesConfig.relevantFiles)
     .through(fileToReaderWith(_.split(',').toList))
-//    .drop(4) // Remove params points
-    .map {
+    .collect {
       case head :: tail => head.drop(60) :: tail // Trim lines
-      case Nil => Nil
     }
     .collect {
       case head :: tail if head.contains("(times") =>

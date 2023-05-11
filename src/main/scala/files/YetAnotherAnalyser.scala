@@ -9,9 +9,7 @@ import fs2._
 
 object YetAnotherAnalyser extends IOApp.Simple {
 
-  private val relevantFile: String = "dw006_948_opcycles.log.txt"
-
-  val stream: Stream[IO, Unit] = readFilesFromPath[IO](filesConfig.directoryPath, List(relevantFile))
+  val stream: Stream[IO, Unit] = readFilesFromPath[IO](filesConfig.directoryPath, filesConfig.relevantFiles)
     .through(fileToReader)
     .map { s =>
       (s, s.split("Vector\\(").last.split(", ").length)
