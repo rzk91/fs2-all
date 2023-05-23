@@ -1,5 +1,5 @@
-# FS2-Kafka
-A sample FS2-based project to read and analyse Kafka messages
+# FS2-All
+A sample FS2-based codebase to perform various streaming operations, including file IO as well as reading and analysing Kafka messages.
 
 ### Also uses the following packages
 - circe (for JSON parsing and deconstruction)
